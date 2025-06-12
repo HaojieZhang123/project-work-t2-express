@@ -9,6 +9,10 @@ const port = process.env.SERVER_PORT || 3000;
 // definisco il file router
 const productRouter = require('./routers/productRouter')
 
+// middlewares
+const errorsHandler = require('./middlewares/errorsHandler');
+const notFound = require('./middlewares/notFound');
+
 //inizializzo cors
 const cors = require('cors');
 
@@ -28,7 +32,11 @@ app.get('/', (req, res) => {
 })
 
 // inizializzo le rotte
-app.use('/', productRouter)
+app.use('/api/products', productRouter)
+
+// errors
+app.use(errorsHandler);
+app.use(notFound);
 
 //server in ascolto
 app.listen(port, () => {
