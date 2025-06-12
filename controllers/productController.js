@@ -7,7 +7,27 @@ const index = (req, res) => {
 
 // show
 const show = (req, res) => {
-    res.send('show')
+    const id = req.params.id;
+
+    // query
+    const productQuery = `SELECT * FROM products WHERE id = ${id}`;
+
+    // execute query
+    connection.query(productQuery, (error, results) => {
+        // error
+        if (error) throw error;
+
+        // not found
+        if (results.length === 0) {
+            res.status(404).json({
+                error: '404',
+                message: 'Product not found'
+            });
+        }
+        else {
+            res.send(results[0]);
+        }
+    });
 }
 
 // store
