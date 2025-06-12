@@ -10,3 +10,15 @@ const connection = mysql.createConnection({
     database: process.env.DB_DATABASE
 })
 
+//effettuo la connessione
+connection.connect((err) => {
+    if (err) {
+        console.log("errore to connect to my sql:" + err)
+    }
+    else {
+        console.log("connected to my sql")
+    }
+})
+
+//esporto la variabile connection
+module.exports = connection
