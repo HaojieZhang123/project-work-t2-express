@@ -6,6 +6,9 @@ const app = express();
 // definisco la porta
 const port = process.env.SERVER_PORT || 3000;
 
+// definisco il file router
+const productRouter = require('./routers/productRouter')
+
 //inizializzo cors
 const cors = require('cors');
 
@@ -23,6 +26,9 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Store API entry point');
 })
+
+// inizializzo le rotte
+app.use('/', productRouter)
 
 //server in ascolto
 app.listen(port, () => {
