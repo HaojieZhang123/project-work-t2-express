@@ -8,6 +8,15 @@ const show = (req, res) => {
     res.send('show')
 }
 
+// store
+app.post(function (req, res) {
+    res.send();
+});
+
+// update
+app.post(function (req, res) {
+    res.send()
+})
 
 module.exports = {
     index,
