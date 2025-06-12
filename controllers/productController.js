@@ -1,22 +1,34 @@
 const connection = require('../data/db')
 
+// index
 const index = (req, res) => {
     res.send('index')
 }
 
+// show
 const show = (req, res) => {
     res.send('show')
 }
 
 // store
-app.post(function (req, res) {
-    res.send();
-});
+const store = (req, res) => {
+    res.send('store');
+};
 
 // update
-app.post(function (req, res) {
-    res.send()
-})
+const update = (req, res) => {
+    res.send('update');
+}
+
+// modify
+const modify = (req, res) => {
+    res.send('modify')
+}
+
+// destroy
+const destroy = (req, res) => {
+    res.send('destroy')
+}
 
 module.exports = {
     index,
@@ -25,11 +37,4 @@ module.exports = {
     update,
     modify,
     destroy
-}
-const modify = (req, res) => {
-    res.send('modify')
-}
-
-const destroy = (req, res) => {
-    res.send('destroy')
 }
