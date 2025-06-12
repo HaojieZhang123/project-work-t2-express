@@ -1,9 +1,15 @@
 const connection = require('../data/db')
 
-// index
-const index = (req, res) => {
-    res.send('index')
-}
+const index = (req, res, next) => {
+    connection.query("SELECT * FROM products", (err, productResult) => {
+        if (err) return next(err); // passo l’errore al middleware
+
+        const products = productResult.map(product => {
+            return product;
+        })
+        res.json(products);
+    });
+};
 
 // show
 const show = (req, res) => {
