@@ -8,6 +8,9 @@ const port = process.env.SERVER_PORT || 3000;
 
 // definisco il file router
 const productRouter = require('./routers/productRouter')
+const brandRouter = require('./routers/brandRouter')
+const categoryRouter = require('./routers/categoryRouter')
+const promoCodeRouter = require('./routers/promoCodeRouter')
 
 // middlewares
 const errorsHandler = require('./middlewares/errorsHandler');
@@ -33,6 +36,9 @@ app.get('/', (req, res) => {
 
 // inizializzo le rotte
 app.use('/api/products', productRouter)
+app.use('/api/category', categoryRouter)
+app.use('/api/brand_name', brandRouter)
+app.use('/api/promo_codes', promoCodeRouter)
 
 // errors
 app.use(errorsHandler);
