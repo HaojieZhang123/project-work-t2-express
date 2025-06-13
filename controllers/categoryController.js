@@ -5,9 +5,9 @@ const index = (req, res, next) => {
     const query = "SELECT * FROM category";
 
     connection.query(query, (err, results) => {
-        if (err) return next(err); // passa l'errore al middleware
+        if (err) return next(err);
 
-        res.json(results);
+        res.json(results); // restutisce tutte le categorie
     });
 };
 
