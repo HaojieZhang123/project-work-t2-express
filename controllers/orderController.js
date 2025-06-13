@@ -1,6 +1,6 @@
 const connection = require('../data/db')
 
-const storeOrder = (req, res, next) => {
+const store = (req, res, next) => {
     const { name, surname, email, phone, address, promo_code_id, shipping_cost } = req.body
 
     const sql = 'INSERT INTO orders (name, surname, email, phone, address, promo_code_id, shipping_cost) VALUES (?, ?, ?, ?, ?, ?, ?)'
@@ -15,4 +15,4 @@ const storeOrder = (req, res, next) => {
     })
 }
 
-module.exports = { storeOrder }
+module.exports = { store }
