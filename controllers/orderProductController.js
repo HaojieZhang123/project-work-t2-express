@@ -1,13 +1,13 @@
 const connection = require('../data/db')
 
 const store = (req, res, next) => {
-    // const { id } = req.params
+    const { order_id, product_id, quantity } = req.body
 
-    const { product_id, quantity } = req.body
+    console.log(req.body)
 
-    const sql = 'INSERT INTO order_product (product_id, quantity) VALUES ( ?, ?)'
+    const sql = 'INSERT INTO order_products (order_id, product_id, quantity) VALUES (?, ?, ?)'
 
-    connection.query(sql, [product_id, quantity], (err, result) => {
+    connection.query(sql, [order_id, product_id, quantity], (err, result) => {
         if (err) { return next('Errore di caricamento') }
 
         res.status(201).json({
