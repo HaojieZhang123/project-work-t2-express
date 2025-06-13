@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 
-const Controller = require('../controllers/brandController')
+const brandController = require('../controllers/brandController')
 
 // Index
 router.get('/', brandController.index)

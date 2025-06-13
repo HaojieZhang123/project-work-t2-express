@@ -1,6 +1,6 @@
 const connection = require('../data/db')
 
-const storeOrder_products = (req, res, next) => {
+const store = (req, res, next) => {
     // const { id } = req.params
 
     const { product_id, quantity } = req.body
@@ -17,4 +17,4 @@ const storeOrder_products = (req, res, next) => {
     })
 }
 
-module.exports = { storeOrder_products }
+module.exports = { store }
