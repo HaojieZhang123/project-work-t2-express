@@ -9,7 +9,7 @@ const port = process.env.SERVER_PORT || 3000;
 // definisco il file router
 const productRouter = require('./routers/productRouter')
 const orderRouter = require('./routers/orderRouter');
-const order_productRouter = require('./routers/order_productRouter');
+const order_productRouter = require('./routers/orderProductRouter');
 
 // middlewares
 const errorsHandler = require('./middlewares/errorsHandler');
