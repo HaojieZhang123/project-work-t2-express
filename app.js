@@ -11,6 +11,8 @@ const productRouter = require('./routers/productRouter')
 const brandRouter = require('./routers/brandRouter')
 const categoryRouter = require('./routers/categoryRouter')
 const promoCodeRouter = require('./routers/promoCodeRouter')
+const orderRouter = require('./routers/orderRouter');
+const order_productRouter = require('./routers/order_productRouter');
 
 // middlewares
 const errorsHandler = require('./middlewares/errorsHandler');
