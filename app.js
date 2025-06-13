@@ -34,7 +34,9 @@ app.get('/', (req, res) => {
 })
 
 // inizializzo le rotte
-app.use('/api/products', productRouter)
+app.use('/api/products', productRouter);
+app.use('./routers/orderRouter', orderRouter);
+app.use('./routers/order_productRouter', order_productRouter);
 
 // errors
 app.use(errorsHandler);
