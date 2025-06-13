@@ -41,6 +41,8 @@ app.use('/api/products', productRouter)
 app.use('/api/category', categoryRouter)
 app.use('/api/brand_name', brandRouter)
 app.use('/api/promo_codes', promoCodeRouter)
+app.use('./api/orderRouter', orderRouter);
+app.use('./api/order_productRouter', order_productRouter);
 
 // errors
 app.use(errorsHandler);
