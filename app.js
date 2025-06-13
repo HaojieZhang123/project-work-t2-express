@@ -12,7 +12,7 @@ const brandRouter = require('./routers/brandRouter')
 const categoryRouter = require('./routers/categoryRouter')
 const promoCodeRouter = require('./routers/promoCodeRouter')
 const orderRouter = require('./routers/orderRouter');
-const order_productRouter = require('./routers/orderProductRouter');
+const orderProductRouter = require('./routers/orderProductRouter');
 
 // middlewares
 const errorsHandler = require('./middlewares/errorsHandler');
@@ -38,11 +38,11 @@ app.get('/', (req, res) => {
 
 // inizializzo le rotte
 app.use('/api/products', productRouter)
-app.use('/api/category', categoryRouter)
-app.use('/api/brand_name', brandRouter)
+app.use('/api/categories', categoryRouter)
+app.use('/api/brands', brandRouter)
 app.use('/api/promo_codes', promoCodeRouter)
-app.use('./api/orderRouter', orderRouter);
-app.use('./api/order_productRouter', order_productRouter);
+app.use('./api/orders', orderRouter);
+app.use('./api/order_product', orderProductRouter);
 
 // errors
 app.use(errorsHandler);

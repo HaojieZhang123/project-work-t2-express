@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 
-const Controller = require('../controllers/promoCodeController')
+const promoCodeController = require('../controllers/promoCodeController')
 
 // Index
 router.get('/', promoCodeController.index)

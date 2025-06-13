@@ -1,8 +1,8 @@
 const express = require('express');
-const order_productController = require('../controllers/order_productController');
-const order_productRouter = express.Router();
+const orderProductController = require('../controllers/orderProductController');
+const orderProductRouter = express.Router();
 
 // Store
-order_productRouter.post('/', order_productController.store);
+orderProductRouter.post('/', orderProductController.store);
 
-module.exports = order_productRouter;
+module.exports = orderProductRouter;
