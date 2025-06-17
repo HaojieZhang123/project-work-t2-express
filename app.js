@@ -13,6 +13,7 @@ const categoryRouter = require('./routers/categoryRouter')
 const promoCodeRouter = require('./routers/promoCodeRouter')
 const orderRouter = require('./routers/orderRouter');
 const orderProductRouter = require('./routers/orderProductRouter');
+const productCategoryRouter = require('./routers/productCategoryRouter');
 
 // middlewares
 const errorsHandler = require('./middlewares/errorsHandler');
@@ -43,6 +44,7 @@ app.use('/api/brands', brandRouter)
 app.use('/api/promo_codes', promoCodeRouter)
 app.use('/api/orders', orderRouter);
 app.use('/api/order_product', orderProductRouter);
+app.use('/api/product_category', productCategoryRouter);
 
 // errors
 app.use(errorsHandler);
