@@ -1,25 +1,30 @@
 const connection = require('../data/db')
 
 const index = (req, res, next) => {
-    connection.query("SELECT * FROM products", (err, productResult) => {
+    // query
+    const sql = 'SELECT p.id AS product_id, p.slug p.product_name, p.price, p.description, p.added_date, p.sold, p.discount, p.image, b.brand_name, c.category_name FROM products p LEFT JOIN brand_name b ON p.brand_id = b.id LEFT JOIN product_category pc ON p.id = pc.product_id LEFT JOIN category c ON pc.category_id = c.id';
+
+    connection.query(sql, (err, productResult) => {
         if (err) return next(err); // passo l’errore al middleware
 
-        const products = productResult.map(product => {
-            return product;
-        })
-        res.json(products);
+        // const products = productResult.map(product => {
+        //     return product;
+        // })
+        res.json(productResult);
     });
 };
 
 // show
 const show = (req, res) => {
-    const id = req.params.id;
+    // const id = req.params.id;
+    // recupero lo slug
+    const slug = req.params.slug;
 
     // query
-    const productQuery = `SELECT * FROM products WHERE id = ${id}`;
+    const sql = 'SELECT p.id AS product_id, p.product_name, p.slug, p.price, p.description, p.added_date, p.sold, p.discount, p.image, b.brand_name, c.category_name FROM products p LEFT JOIN brand_name b ON p.brand_id = b.id LEFT JOIN product_category pc ON p.id = pc.product_id LEFT JOIN category c ON pc.category_id = c.id WHERE p.slug = ?';
 
     // execute query
-    connection.query(productQuery, (error, results) => {
+    connection.query(sql, [slug], (error, results) => {
         // error
         if (error) throw error;
 
@@ -31,7 +36,7 @@ const show = (req, res) => {
             });
         }
         else {
-            res.send(results[0]);
+            res.json(results[0]);
         }
     });
 }
