@@ -7,11 +7,8 @@ const productController = require('../controllers/productController')
 // Index
 router.get('/', productController.index)
 
-// Best sellers
-router.get('/special/best-sellers', productController.bestSellers)
-
-// Latest products
-router.get('/special/latest-products', productController.latestProducts)
+// Search
+router.get('/search', productController.search)
 
 // Show
 router.get('/:slug', productController.show)
@@ -28,6 +25,11 @@ router.patch('/:slug', productController.modify)
 // Destroy
 router.delete('/:slug', productController.destroy)
 
+// Best sellers
+router.get('/special/best-sellers', productController.bestSellers)
+
+// Latest products
+router.get('/special/latest-products', productController.latestProducts)
 
 
 
