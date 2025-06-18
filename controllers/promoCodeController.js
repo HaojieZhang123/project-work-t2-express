@@ -14,10 +14,10 @@ const index = (req, res, next) => {
 
 // show
 const show = (req, res, next) => {
-    const id = req.params.id;
-    const sql = 'SELECT * FROM promo_codes WHERE id = ?';
+    const code = req.params.code;
+    const sql = 'SELECT * FROM promo_codes WHERE code = ?';
 
-    connection.query(sql, [id], (error, results) => {
+    connection.query(sql, [code], (error, results) => {
         if (error) return next(error);
 
         if (results.length === 0) {

@@ -8,6 +8,6 @@ const promoCodeController = require('../controllers/promoCodeController')
 router.get('/', promoCodeController.index)
 
 // Show
-router.get('/:id', promoCodeController.show)
+router.get('/:code', promoCodeController.show)
 
 module.exports = router
