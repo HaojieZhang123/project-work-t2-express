@@ -41,6 +41,33 @@ const show = (req, res) => {
     });
 }
 
+// Best sellers: primi 5 prodotti ordinati per sold
+const bestSellers = (req, res, next) => {
+    const query = `
+        SELECT * FROM products ORDER BY sold DESC LIMIT 5
+    `;
+
+    connection.query(query, (error, results) => {
+        if (error) return next(err);
+
+        res.json(results);
+    });
+};
+
+
+// Latest products: primi 5 prodotti ordinati per created_at
+const latestProducts = (req, res, next) => {
+    const query = `
+        SELECT * FROM products ORDER BY added_date DESC LIMIT 5
+    `;
+
+    connection.query(query, (error, results) => {
+        if (error) return next(err);
+
+        res.json(results);
+    });
+};
+
 // store
 const store = (req, res) => {
     res.send('store');
@@ -67,5 +94,7 @@ module.exports = {
     store,
     update,
     modify,
-    destroy
+    destroy,
+    bestSellers,
+    latestProducts
 }
