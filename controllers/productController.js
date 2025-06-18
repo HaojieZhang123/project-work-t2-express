@@ -2,7 +2,7 @@ const connection = require('../data/db')
 
 const index = (req, res, next) => {
     // query
-    const sql = 'SELECT p.id AS product_id, p.slug p.product_name, p.price, p.description, p.added_date, p.sold, p.discount, p.image, b.brand_name, c.category_name FROM products p LEFT JOIN brand_name b ON p.brand_id = b.id LEFT JOIN product_category pc ON p.id = pc.product_id LEFT JOIN category c ON pc.category_id = c.id';
+    const sql = 'SELECT p.id AS product_id, p.slug, p.product_name, p.price, p.description, p.added_date, p.sold, p.discount, p.image, b.brand_name, c.category_name FROM products p LEFT JOIN brand_name b ON p.brand_id = b.id LEFT JOIN product_category pc ON p.id = pc.product_id LEFT JOIN category c ON pc.category_id = c.id';
 
     connection.query(sql, (err, productResult) => {
         if (err) return next(err); // passo l’errore al middleware
