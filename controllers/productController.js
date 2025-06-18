@@ -44,7 +44,7 @@ const show = (req, res) => {
 // Best sellers: primi 5 prodotti ordinati per sold
 const bestSellers = (req, res, next) => {
     const query = `
-        SELECT * FROM products ORDER BY sold DESC LIMIT 5
+        SELECT p.id AS id, p.slug, p.product_name, p.price, p.description, p.added_date, p.sold, p.discount, p.image, b.brand_name, c.category_name FROM products p LEFT JOIN brand_name b ON p.brand_id = b.id LEFT JOIN product_category pc ON p.id = pc.product_id LEFT JOIN category c ON pc.category_id = c.id ORDER BY sold DESC LIMIT 5
     `;
 
     connection.query(query, (error, results) => {
@@ -58,7 +58,7 @@ const bestSellers = (req, res, next) => {
 // Latest products: primi 5 prodotti ordinati per created_at
 const latestProducts = (req, res, next) => {
     const query = `
-        SELECT * FROM products ORDER BY added_date DESC LIMIT 5
+        SELECT p.id AS id, p.slug, p.product_name, p.price, p.description, p.added_date, p.sold, p.discount, p.image, b.brand_name, c.category_name FROM products p LEFT JOIN brand_name b ON p.brand_id = b.id LEFT JOIN product_category pc ON p.id = pc.product_id LEFT JOIN category c ON pc.category_id = c.id ORDER BY added_date DESC LIMIT 5
     `;
 
     connection.query(query, (error, results) => {
