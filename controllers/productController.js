@@ -104,6 +104,49 @@ const latestProducts = (req, res, next) => {
     });
 };
 
+
+const related = (req, res, next) => {
+    const slug = req.params.slug;
+
+    // categorie e il brand del prodotto selezionato
+    const sql = `
+        SELECT p.brand_id, GROUP_CONCAT(pc.category_id) AS category_ids
+        FROM products p
+        LEFT JOIN product_category pc ON p.id = pc.product_id
+        WHERE p.slug = ?
+        GROUP BY p.id
+    `;
+
+    connection.query(sql, [slug], (err, results) => {
+        if (err) return next(err);
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: '404', message: 'Product not found' });
+        }
+
+        const brandId = results[0].brand_id;
+        const categoryIds = results[0].category_ids.split(',');
+
+        //seleziona prodotti con stesso brand o stessa categoria, escludendo il prodotto stesso
+        const relatedSql = `
+            SELECT DISTINCT p.id AS id, p.slug, p.product_name, p.price, p.description, p.added_date, p.sold, p.discount, p.image, b.brand_name, c.category_name
+            FROM products p
+            LEFT JOIN brand_name b ON p.brand_id = b.id
+            LEFT JOIN product_category pc ON p.id = pc.product_id
+            LEFT JOIN category c ON pc.category_id = c.id
+            WHERE p.slug != ?
+            AND (p.brand_id = ? OR pc.category_id IN (?))
+            LIMIT 10
+        `;
+
+        connection.query(relatedSql, [slug, brandId, categoryIds], (err2, relatedResults) => {
+            if (err2) return next(err2);
+
+            res.json(relatedResults);
+        });
+    });
+};
+
 module.exports = {
     index,
     show,
@@ -113,5 +156,6 @@ module.exports = {
     destroy,
     bestSellers,
     latestProducts,
-    search
+    search,
+    related
 }

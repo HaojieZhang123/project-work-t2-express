@@ -31,6 +31,9 @@ router.get('/special/best-sellers', productController.bestSellers)
 // Latest products
 router.get('/special/latest-products', productController.latestProducts)
 
+// related
+router.get('/:slug/related', productController.related);
+
 
 
 module.exports = router
