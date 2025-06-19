@@ -85,7 +85,7 @@ const bestSellers = (req, res, next) => {
     `;
 
     connection.query(query, (error, results) => {
-        if (error) return next(err);
+        if (error) return next(error);
 
         res.json(results);
     });
@@ -98,7 +98,7 @@ const latestProducts = (req, res, next) => {
     `;
 
     connection.query(query, (error, results) => {
-        if (error) return next(err);
+        if (error) return next(error);
 
         res.json(results);
     });
