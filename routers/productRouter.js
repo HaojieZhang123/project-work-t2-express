@@ -10,6 +10,9 @@ router.get('/', productController.index)
 // Search
 router.get('/search', productController.search)
 
+// related
+router.get('/:slug/related', productController.related);
+
 // Show
 router.get('/:slug', productController.show)
 
@@ -31,8 +34,6 @@ router.get('/special/best-sellers', productController.bestSellers)
 // Latest products
 router.get('/special/latest-products', productController.latestProducts)
 
-// related
-router.get('/:slug/related', productController.related);
 
 
 
