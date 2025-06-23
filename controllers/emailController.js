@@ -121,6 +121,7 @@ function sendOrderConfirmationEmail(req, res) {
             },
         });
 
+        // customer
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: email,
@@ -128,13 +129,51 @@ function sendOrderConfirmationEmail(req, res) {
             html: htmlMessage,
         };
 
+        // Vendor
+        const vendorHtmlMessage = `
+          <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; background-color: #0000; padding: 24px; border-radius: 8px; max-width: 700px; margin: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid #d3c5b0;">
+            <h2 style="color: #a8bba2;">New Order Received</h2>
+            <p style="font-size: 16px;">Order from: <strong>${name} ${surname}</strong> (${email})</p>
+            <p style="font-size: 16px;"><strong>Order number:</strong> ${orderNumber}</p>
+            <h3 style="color: #a8bba2; margin-top: 20px;">Ordered products:</h3>
+            ${orderDetailsHTML}
+            <p style="font-size: 16px; margin-top: 20px; color: #a8bba2;">
+              <strong>Products total:</strong> €${totalProductsPrice.toFixed(2)}<br>
+              <strong>Shipping cost:</strong> €${shippingCostFinal.toFixed(2)}<br>
+              <strong style="font-size: 18px; color: #f9e6d8;">Order total:</strong> €${finalTotal.toFixed(2)}
+            </p>
+            <h3 style="margin-top: 24px; color: #a8bba2;">Shipping information:</h3>
+            <p style="font-size: 16px;">
+              Address: ${address || ''}<br>
+              Phone: ${phone || ''}
+            </p>
+            <p style="font-size: 16px; margin-top: 24px; font-weight: bold; color: #f9e6d8;">
+              This is a vendor copy of the order confirmation.
+            </p>
+          </div>
+        `;
+
+        const vendorMailOptions = {
+            from: process.env.EMAIL_USER,
+            to: process.env.EMAIL_USER,
+            subject: `New Order Received: ${orderNumber}`,
+            html: vendorHtmlMessage,
+        };
+
+        // Send customer mail first, then vendor mail
         transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
                 console.error('Errore invio email:', err);
                 return res.status(500).json({ error: 'Errore invio email' });
             }
-            console.log('Email inviata:', info.response);
-            return res.status(200).json({ message: 'Email sent successfully' });
+            // Send vendor mail
+            transporter.sendMail(vendorMailOptions, (vendorErr, vendorInfo) => {
+                if (vendorErr) {
+                    console.error('Errore invio email venditore:', vendorErr);
+                    // Still return success to customer, but log the error
+                }
+                return res.status(200).json({ message: 'Email sent successfully' });
+            });
         });
     });
 }
