@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const pool = require('../data/db'); // il pool mysql
+const pool = require('../data/db'); 
 
 function getFullProductDetails(products, callback) {
     if (!Array.isArray(products) || products.length === 0) return callback(null, []);
@@ -18,12 +18,14 @@ function getFullProductDetails(products, callback) {
 }
 
 function sendOrderConfirmationEmail(req, res) {
-    const { name, surname, email, phone, address, products } = req.body;
+    const { name, surname, email, phone, address, products, promoCodeId } = req.body;
 
     if (!name || !email || !products || !Array.isArray(products) || products.length === 0) {
         return res.status(400).json({ error: 'Missing or invalid required fields' });
     }
 
+    // Helper to continue after promo code fetch
+    function proceedWithPromoCode(promoCodeString) {
     getFullProductDetails(products, (err, fullProducts) => {
         if (err) {
             console.error('Errore recupero prodotti:', err);
@@ -50,6 +52,10 @@ function sendOrderConfirmationEmail(req, res) {
             (acc, p) => acc + p.discountedPrice * p.quantity,
             0
         );
+
+        const promoCodeHtml = promoCodeString
+        ? `<p style="font-size: 16px; color: #a8bba2;"><strong>Promo code used:</strong> ${promoCodeString}</p>`
+        : '';
 
         const shippingCostFinal = totalProductsPrice > 50 ? 0.00 : 5.00;
         const finalTotal = totalProductsPrice + shippingCostFinal;
@@ -91,6 +97,8 @@ function sendOrderConfirmationEmail(req, res) {
         <p style="font-size: 16px; line-height: 1.5;">
           <strong style="color: #a8bba2;">Order number:</strong> ${orderNumber}
         </p>
+
+        ${promoCodeHtml}
 
         <h3 style="color: #a8bba2; margin-top: 20px;">Ordered products:</h3>
         ${orderDetailsHTML}
@@ -135,6 +143,7 @@ function sendOrderConfirmationEmail(req, res) {
             <h2 style="color: #a8bba2;">New Order Received</h2>
             <p style="font-size: 16px;">Order from: <strong>${name} ${surname}</strong> (${email})</p>
             <p style="font-size: 16px;"><strong>Order number:</strong> ${orderNumber}</p>
+            ${promoCodeHtml}
             <h3 style="color: #a8bba2; margin-top: 20px;">Ordered products:</h3>
             ${orderDetailsHTML}
             <p style="font-size: 16px; margin-top: 20px; color: #a8bba2;">
@@ -176,6 +185,24 @@ function sendOrderConfirmationEmail(req, res) {
             });
         });
     });
+  }
+  // If promoCodeId is present, fetch the code from DB
+    if (promoCodeId) {
+        pool.query(
+            'SELECT code FROM promo_codes WHERE id = ? LIMIT 1',
+            [promoCodeId],
+            (err, results) => {
+                if (err) {
+                    console.error('Errore recupero promo code:', err);
+                    return res.status(500).json({ error: 'Errore recupero promo code' });
+                }
+                const promoCodeString = results.length > 0 ? results[0].code : null;
+                proceedWithPromoCode(promoCodeString);
+            }
+        );
+    } else {
+        proceedWithPromoCode(null);
+    }
 }
 
 module.exports = { sendOrderConfirmationEmail };
