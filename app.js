@@ -3,6 +3,9 @@ const express = require('express');
 // inizializzo express
 const app = express();
 
+// dotenv per leggere variabili d'ambiente
+require('dotenv').config();
+
 // definisco la porta
 const port = process.env.SERVER_PORT || 3000;
 
@@ -14,6 +17,7 @@ const promoCodeRouter = require('./routers/promoCodeRouter')
 const orderRouter = require('./routers/orderRouter');
 const orderProductRouter = require('./routers/orderProductRouter');
 const productCategoryRouter = require('./routers/productCategoryRouter');
+const emailRouters = require('./routers/emailRouters');
 
 // middlewares
 const errorsHandler = require('./middlewares/errorsHandler');
@@ -45,6 +49,7 @@ app.use('/api/promo_codes', promoCodeRouter)
 app.use('/api/orders', orderRouter);
 app.use('/api/order_product', orderProductRouter);
 app.use('/api/product_category', productCategoryRouter);
+app.use("/send", emailRoutes);
 
 
 // errors
