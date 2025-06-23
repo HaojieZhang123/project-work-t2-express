@@ -18,7 +18,7 @@ function getFullProductDetails(products, callback) {
 }
 
 function sendOrderConfirmationEmail(req, res) {
-    const { name, surname, email, phone, address, shipping_cost, products } = req.body;
+    const { name, surname, email, phone, address, products } = req.body;
 
     if (!name || !email || !products || !Array.isArray(products) || products.length === 0) {
         return res.status(400).json({ error: 'Missing or invalid required fields' });
