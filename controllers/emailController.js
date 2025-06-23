@@ -51,7 +51,7 @@ function sendOrderConfirmationEmail(req, res) {
             0
         );
 
-        const shippingCostFinal = totalProductsPrice > 50 ? 0 : parseFloat(shipping_cost || 0);
+        const shippingCostFinal = totalProductsPrice > 50 ? 0.00 : 5.00;
         const finalTotal = totalProductsPrice + shippingCostFinal;
         const orderNumber = `ORD-${Date.now()}`;
 
