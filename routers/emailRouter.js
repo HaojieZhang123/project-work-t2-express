@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { sendEmail } = require('../controllers/emailController');
+const { sendOrderConfirmationEmail } = require('../controllers/emailController');
 
 // definizione della rotta POST per inviare un'email
-router.post('/', sendEmail);
+router.post('/', sendOrderConfirmationEmail);
 
 module.exports = router;
