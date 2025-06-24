@@ -49,7 +49,7 @@ app.use('/api/promo_codes', promoCodeRouter)
 app.use('/api/orders', orderRouter);
 app.use('/api/order_product', orderProductRouter);
 app.use('/api/product_category', productCategoryRouter);
-app.use("/send", emailRouter);
+app.use("/api/send", emailRouter);
 
 
 // errors
